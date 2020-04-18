@@ -31,13 +31,13 @@
     android:layout_height="wrap_content"
     android:layout_weight="1"
     android:layout_marginStart="@dimen/call_log_icon_margin"
-    style="@style/PrimaryText" />
+    style="@style/Dialer.TextAppearance.Primary" />
 
   <TextView
     android:id="@+id/percent"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/call_log_icon_margin"
-    style="@style/SecondaryText" />
+    style="@style/Dialer.TextAppearance.Secondary" />
 
 </LinearLayout>

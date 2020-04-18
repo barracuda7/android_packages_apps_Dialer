@@ -22,7 +22,6 @@
   <string name="call_log_delete_all">Llimpiar historial de llamaes</string>
   <string name="call_log_trash_voicemail">Desaniciar mensaxe de voz</string>
   <string name="snackbar_voicemail_deleted">Desanicióse\'l mensaxe de voz</string>
-  <string name="snackbar_voicemail_deleted_undo">DESFACER</string>
   <string name="clearCallLogConfirmation_title">¿Llimpiar historial de llamaes?</string>
   <string name="clearCallLogConfirmation">Esto desaniciará toles llamaes del to historial</string>
   <string name="clearCallLogProgress_title">Llimpiando historial de llamaes\u2026</string>

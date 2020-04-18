@@ -30,112 +30,112 @@ import lineageos.providers.LineageSettings;
 import java.util.Arrays;
 
 public class LookupSettingsFragment extends PreferenceFragment
-        implements Preference.OnPreferenceChangeListener {
+    implements Preference.OnPreferenceChangeListener {
 
-    private static final String KEY_ENABLE_FORWARD_LOOKUP = "enable_forward_lookup";
-    private static final String KEY_ENABLE_PEOPLE_LOOKUP = "enable_people_lookup";
-    private static final String KEY_ENABLE_REVERSE_LOOKUP = "enable_reverse_lookup";
-    private static final String KEY_FORWARD_LOOKUP_PROVIDER = "forward_lookup_provider";
-    private static final String KEY_PEOPLE_LOOKUP_PROVIDER = "people_lookup_provider";
-    private static final String KEY_REVERSE_LOOKUP_PROVIDER = "reverse_lookup_provider";
+  private static final String KEY_ENABLE_FORWARD_LOOKUP = "enable_forward_lookup";
+  private static final String KEY_ENABLE_PEOPLE_LOOKUP = "enable_people_lookup";
+  private static final String KEY_ENABLE_REVERSE_LOOKUP = "enable_reverse_lookup";
+  private static final String KEY_FORWARD_LOOKUP_PROVIDER = "forward_lookup_provider";
+  private static final String KEY_PEOPLE_LOOKUP_PROVIDER = "people_lookup_provider";
+  private static final String KEY_REVERSE_LOOKUP_PROVIDER = "reverse_lookup_provider";
 
-    private SwitchPreference mEnableForwardLookup;
-    private SwitchPreference mEnablePeopleLookup;
-    private SwitchPreference mEnableReverseLookup;
-    private ListPreference mForwardLookupProvider;
-    private ListPreference mPeopleLookupProvider;
-    private ListPreference mReverseLookupProvider;
+  private SwitchPreference enableForwardLookup;
+  private SwitchPreference enablePeopleLookup;
+  private SwitchPreference enableReverseLookup;
+  private ListPreference forwardLookupProvider;
+  private ListPreference peopleLookupProvider;
+  private ListPreference reverseLookupProvider;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
-        addPreferencesFromResource(R.xml.lookup_settings);
+    addPreferencesFromResource(R.xml.lookup_settings);
 
-        mEnableForwardLookup = (SwitchPreference) findPreference(KEY_ENABLE_FORWARD_LOOKUP);
-        mEnablePeopleLookup = (SwitchPreference) findPreference(KEY_ENABLE_PEOPLE_LOOKUP);
-        mEnableReverseLookup = (SwitchPreference) findPreference(KEY_ENABLE_REVERSE_LOOKUP);
+    enableForwardLookup = (SwitchPreference) findPreference(KEY_ENABLE_FORWARD_LOOKUP);
+    enablePeopleLookup = (SwitchPreference) findPreference(KEY_ENABLE_PEOPLE_LOOKUP);
+    enableReverseLookup = (SwitchPreference) findPreference(KEY_ENABLE_REVERSE_LOOKUP);
 
-        mEnableForwardLookup.setOnPreferenceChangeListener(this);
-        mEnablePeopleLookup.setOnPreferenceChangeListener(this);
-        mEnableReverseLookup.setOnPreferenceChangeListener(this);
+    enableForwardLookup.setOnPreferenceChangeListener(this);
+    enablePeopleLookup.setOnPreferenceChangeListener(this);
+    enableReverseLookup.setOnPreferenceChangeListener(this);
 
-        mForwardLookupProvider = (ListPreference) findPreference(KEY_FORWARD_LOOKUP_PROVIDER);
-        mPeopleLookupProvider = (ListPreference) findPreference(KEY_PEOPLE_LOOKUP_PROVIDER);
-        mReverseLookupProvider = (ListPreference) findPreference(KEY_REVERSE_LOOKUP_PROVIDER);
+    forwardLookupProvider = (ListPreference) findPreference(KEY_FORWARD_LOOKUP_PROVIDER);
+    peopleLookupProvider = (ListPreference) findPreference(KEY_PEOPLE_LOOKUP_PROVIDER);
+    reverseLookupProvider = (ListPreference) findPreference(KEY_REVERSE_LOOKUP_PROVIDER);
 
-        mForwardLookupProvider.setOnPreferenceChangeListener(this);
-        mPeopleLookupProvider.setOnPreferenceChangeListener(this);
-        mReverseLookupProvider.setOnPreferenceChangeListener(this);
+    forwardLookupProvider.setOnPreferenceChangeListener(this);
+    peopleLookupProvider.setOnPreferenceChangeListener(this);
+    reverseLookupProvider.setOnPreferenceChangeListener(this);
+  }
+
+  @Override
+  public void onResume() {
+    super.onResume();
+
+    restoreLookupProviderSwitches();
+    restoreLookupProviders();
+  }
+
+  @Override
+  public boolean onPreferenceChange(Preference preference, Object newValue) {
+    final ContentResolver cr = getActivity().getContentResolver();
+
+    if (preference == enableForwardLookup) {
+      LineageSettings.System.putInt(cr, LineageSettings.System.ENABLE_FORWARD_LOOKUP,
+          ((Boolean) newValue) ? 1 : 0);
+    } else if (preference == enablePeopleLookup) {
+      LineageSettings.System.putInt(cr, LineageSettings.System.ENABLE_PEOPLE_LOOKUP,
+          ((Boolean) newValue) ? 1 : 0);
+    } else if (preference == enableReverseLookup) {
+      LineageSettings.System.putInt(cr, LineageSettings.System.ENABLE_REVERSE_LOOKUP,
+          ((Boolean) newValue) ? 1 : 0);
+    } else if (preference == forwardLookupProvider) {
+      LineageSettings.System.putString(cr, LineageSettings.System.FORWARD_LOOKUP_PROVIDER,
+          (String) newValue);
+    } else if (preference == peopleLookupProvider) {
+      LineageSettings.System.putString(cr, LineageSettings.System.PEOPLE_LOOKUP_PROVIDER,
+          (String) newValue);
+    } else if (preference == reverseLookupProvider) {
+      LineageSettings.System.putString(cr, LineageSettings.System.REVERSE_LOOKUP_PROVIDER,
+          (String) newValue);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
+    return true;
+  }
 
-        restoreLookupProviderSwitches();
-        restoreLookupProviders();
+  private void restoreLookupProviderSwitches() {
+    final ContentResolver cr = getActivity().getContentResolver();
+    enableForwardLookup.setChecked(LineageSettings.System.getInt(cr,
+        LineageSettings.System.ENABLE_FORWARD_LOOKUP, 0) != 0);
+    enablePeopleLookup.setChecked(LineageSettings.System.getInt(cr,
+        LineageSettings.System.ENABLE_PEOPLE_LOOKUP, 0) != 0);
+    enableReverseLookup.setChecked(LineageSettings.System.getInt(cr,
+        LineageSettings.System.ENABLE_REVERSE_LOOKUP, 0) != 0);
+  }
+
+  private void restoreLookupProviders() {
+    restoreLookupProvider(forwardLookupProvider,
+        LineageSettings.System.FORWARD_LOOKUP_PROVIDER);
+    restoreLookupProvider(peopleLookupProvider,
+        LineageSettings.System.PEOPLE_LOOKUP_PROVIDER);
+    restoreLookupProvider(reverseLookupProvider,
+        LineageSettings.System.REVERSE_LOOKUP_PROVIDER);
+  }
+
+  private void restoreLookupProvider(ListPreference pref, String key) {
+    if (pref.getEntries().length < 1) {
+      pref.setEnabled(false);
+      return;
     }
 
-    @Override
-    public boolean onPreferenceChange(Preference preference, Object newValue) {
-        final ContentResolver cr = getActivity().getContentResolver();
-
-        if (preference == mEnableForwardLookup) {
-            LineageSettings.System.putInt(cr, LineageSettings.System.ENABLE_FORWARD_LOOKUP,
-                    ((Boolean) newValue) ? 1 : 0);
-        } else if (preference == mEnablePeopleLookup) {
-            LineageSettings.System.putInt(cr, LineageSettings.System.ENABLE_PEOPLE_LOOKUP,
-                    ((Boolean) newValue) ? 1 : 0);
-        } else if (preference == mEnableReverseLookup) {
-            LineageSettings.System.putInt(cr, LineageSettings.System.ENABLE_REVERSE_LOOKUP,
-                    ((Boolean) newValue) ? 1 : 0);
-        } else if (preference == mForwardLookupProvider) {
-            LineageSettings.System.putString(cr, LineageSettings.System.FORWARD_LOOKUP_PROVIDER,
-                    (String) newValue);
-        } else if (preference == mPeopleLookupProvider) {
-            LineageSettings.System.putString(cr, LineageSettings.System.PEOPLE_LOOKUP_PROVIDER,
-                    (String) newValue);
-        } else if (preference == mReverseLookupProvider) {
-            LineageSettings.System.putString(cr, LineageSettings.System.REVERSE_LOOKUP_PROVIDER,
-                    (String) newValue);
-        }
-
-        return true;
+    final ContentResolver cr = getActivity().getContentResolver();
+    String provider = LineageSettings.System.getString(cr, key);
+    if (provider == null) {
+      pref.setValueIndex(0);
+      LineageSettings.System.putString(cr, key, pref.getValue());
+    } else {
+      pref.setValue(provider);
     }
-
-    private void restoreLookupProviderSwitches() {
-        final ContentResolver cr = getActivity().getContentResolver();
-        mEnableForwardLookup.setChecked(LineageSettings.System.getInt(cr,
-                LineageSettings.System.ENABLE_FORWARD_LOOKUP, 0) != 0);
-        mEnablePeopleLookup.setChecked(LineageSettings.System.getInt(cr,
-                LineageSettings.System.ENABLE_PEOPLE_LOOKUP, 0) != 0);
-        mEnableReverseLookup.setChecked(LineageSettings.System.getInt(cr,
-                LineageSettings.System.ENABLE_REVERSE_LOOKUP, 0) != 0);
-    }
-
-    private void restoreLookupProviders() {
-        restoreLookupProvider(mForwardLookupProvider,
-                LineageSettings.System.FORWARD_LOOKUP_PROVIDER);
-        restoreLookupProvider(mPeopleLookupProvider,
-                LineageSettings.System.PEOPLE_LOOKUP_PROVIDER);
-        restoreLookupProvider(mReverseLookupProvider,
-                LineageSettings.System.REVERSE_LOOKUP_PROVIDER);
-    }
-
-    private void restoreLookupProvider(ListPreference pref, String key) {
-        if (pref.getEntries().length < 1) {
-            pref.setEnabled(false);
-            return;
-        }
-
-        final ContentResolver cr = getActivity().getContentResolver();
-        String provider = LineageSettings.System.getString(cr, key);
-        if (provider == null) {
-            pref.setValueIndex(0);
-            LineageSettings.System.putString(cr, key, pref.getValue());
-        } else {
-            pref.setValue(provider);
-        }
-    }
+  }
 }

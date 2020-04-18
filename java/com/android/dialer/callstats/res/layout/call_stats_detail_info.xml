@@ -30,7 +30,7 @@
     android:id="@+id/date_filter"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    style="@style/SecondaryText" />
+    style="@style/Dialer.TextAppearance.Secondary" />
 
   <RelativeLayout
     android:id="@+id/duration_container"
@@ -45,7 +45,7 @@
       android:text="@string/call_stats_title_durations"
       android:layout_marginBottom="@dimen/call_log_vertical_padding"
       android:textColor="?android:attr/colorAccent"
-      style="@android:style/TextAppearance.Material.Subhead" />
+      style="@style/TextAppearance.CallStatsCategoryTitle" />
 
     <TextView
       android:id="@+id/total_duration_total"
@@ -53,7 +53,7 @@
       android:layout_height="wrap_content"
       android:layout_alignParentEnd="true"
       android:layout_below="@id/durations_header"
-      style="@style/PrimaryText" />
+      style="@style/Dialer.TextAppearance.Primary" />
 
     <TextView
       android:layout_width="wrap_content"
@@ -62,7 +62,7 @@
       android:layout_toStartOf="@id/total_duration_total"
       android:layout_alignBaseline="@id/total_duration_total"
       android:text="@string/call_stats_title_of_total"
-      style="@style/PrimaryText" />
+      style="@style/Dialer.TextAppearance.Primary" />
 
     <com.android.dialer.widget.LinearColorBar
       android:id="@+id/duration_total_percent_bar"
@@ -76,7 +76,7 @@
       android:layout_height="wrap_content"
       android:layout_alignParentEnd="true"
       android:layout_below="@id/duration_total_percent_bar"
-      style="@style/PrimaryText" />
+      style="@style/Dialer.TextAppearance.Primary" />
 
     <TextView
       android:layout_width="wrap_content"
@@ -85,7 +85,7 @@
       android:layout_toStartOf="@id/total_duration_number"
       android:layout_alignBaseline="@id/total_duration_number"
       android:text="@string/call_stats_title_for_number"
-      style="@style/PrimaryText" />
+      style="@style/Dialer.TextAppearance.Primary" />
 
     <com.android.dialer.widget.LinearColorBar
       android:id="@+id/duration_number_percent_bar"
@@ -120,7 +120,7 @@
     android:layout_marginBottom="@dimen/call_log_vertical_padding"
     android:text="@string/call_stats_title_count"
     android:textColor="?android:attr/colorAccent"
-    style="@android:style/TextAppearance.Material.Subhead" />
+    style="@style/TextAppearance.CallStatsCategoryTitle" />
 
   <TextView
     android:id="@+id/total_count_total"
@@ -128,7 +128,7 @@
     android:layout_height="wrap_content"
     android:layout_alignParentEnd="true"
     android:layout_below="@id/count_header"
-    style="@style/PrimaryText" />
+    style="@style/Dialer.TextAppearance.Primary" />
 
   <TextView
     android:layout_width="wrap_content"
@@ -137,7 +137,7 @@
     android:layout_toStartOf="@id/total_count_total"
     android:layout_alignBaseline="@id/total_count_total"
     android:text="@string/call_stats_title_of_total"
-    style="@style/PrimaryText" />
+    style="@style/Dialer.TextAppearance.Primary" />
 
   <com.android.dialer.widget.LinearColorBar
     android:id="@+id/count_total_percent_bar"
@@ -151,7 +151,7 @@
     android:layout_height="wrap_content"
     android:layout_alignParentEnd="true"
     android:layout_below="@id/count_total_percent_bar"
-    style="@style/PrimaryText" />
+    style="@style/Dialer.TextAppearance.Primary" />
 
   <TextView
     android:layout_width="wrap_content"
@@ -160,7 +160,7 @@
     android:layout_toStartOf="@id/total_count_number"
     android:layout_alignBaseline="@id/total_count_number"
     android:text="@string/call_stats_title_for_number"
-    style="@style/PrimaryText" />
+    style="@style/Dialer.TextAppearance.Primary" />
 
   <com.android.dialer.widget.LinearColorBar
     android:id="@+id/count_number_percent_bar"
@@ -209,7 +209,7 @@
     android:layout_marginBottom="@dimen/call_log_vertical_padding"
     android:text="@string/call_stats_title_average_duration"
     android:textColor="?android:attr/colorAccent"
-    style="@android:style/TextAppearance.Material.Subhead" />
+    style="@style/TextAppearance.CallStatsCategoryTitle" />
 
   <include
     android:id="@+id/in_average"

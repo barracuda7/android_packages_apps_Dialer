@@ -23,7 +23,6 @@
     <string name="call_stats_missed">ತಪ್ಪಿದ: <xliff:g id="value">%s</xliff:g></string>
     <string name="call_stats_blocked">ನಿರ್ಬಂಧಿತ: <xliff:g id="value">%s</xliff:g></string>
     <string name="call_stats_percent"><xliff:g id="percent">%d</xliff:g>%%</string>
-    <string name="call_stats_header_total">ಒಟ್ಟು: <xliff:g id="call_count">%s</xliff:g>, <xliff:g id="duration">%s</xliff:g></string>
     <string name="call_stats_header_total_callsonly">ಒಟ್ಟು: <xliff:g id="call_count">%s</xliff:g></string>
     <string name="call_stats_filter_from">ಪ್ರಾರಂಭ ದಿನಾಂಕ</string>
     <string name="call_stats_filter_to">ಮುಕ್ತಾಯ ದಿನಾಂಕ</string>

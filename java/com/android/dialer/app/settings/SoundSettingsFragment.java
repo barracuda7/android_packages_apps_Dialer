@@ -38,7 +38,6 @@ import android.telephony.TelephonyManager;
 import android.widget.Toast;
 import com.android.dialer.app.R;
 import com.android.dialer.callrecord.impl.CallRecorderService;
-import com.android.dialer.compat.SdkVersionOverride;
 import com.android.dialer.util.SettingsUtil;
 
 public class SoundSettingsFragment extends PreferenceFragment
@@ -130,8 +129,7 @@ public class SoundSettingsFragment extends PreferenceFragment
 
     TelephonyManager telephonyManager =
         (TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE);
-    if (SdkVersionOverride.getSdkVersion(Build.VERSION_CODES.M) >= Build.VERSION_CODES.M
-        && telephonyManager.canChangeDtmfToneLength()
+    if (telephonyManager.canChangeDtmfToneLength()
         && (telephonyManager.isWorldPhone() || !shouldHideCarrierSettings())) {
       dtmfToneLength.setOnPreferenceChangeListener(this);
       dtmfToneLength.setValueIndex(

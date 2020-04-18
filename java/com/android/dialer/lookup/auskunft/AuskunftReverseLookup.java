@@ -26,22 +26,29 @@ import java.io.IOException;
 import java.util.List;
 
 public class AuskunftReverseLookup extends ReverseLookup {
-    private static final String TAG = AuskunftReverseLookup.class.getSimpleName();
+  public AuskunftReverseLookup(Context context) {
+  }
 
-    public AuskunftReverseLookup(Context context) {
+  @Override
+  public ContactInfo lookupNumber(Context context, String normalizedNumber,
+      String formattedNumber) throws IOException {
+    // only Austrian numbers are supported
+    if (normalizedNumber.startsWith("+") && !normalizedNumber.startsWith("+43")) {
+      return null;
     }
 
-    @Override
-    public ContactInfo lookupNumber(Context context, String normalizedNumber,
-            String formattedNumber) throws IOException {
-        // only Austrian numbers are supported
-        if (normalizedNumber.startsWith("+") && !normalizedNumber.startsWith("+43")) {
-            return null;
-        }
-
-        // query the API and return null if nothing found or general error
-        List<ContactInfo> infos = AuskunftApi.query(normalizedNumber, ContactBuilder.REVERSE_LOOKUP,
-                normalizedNumber, formattedNumber);
-        return (infos != null && !infos.isEmpty()) ? infos.get(0) : null;
+    // query the API and return null if nothing found or general error
+    List<AuskunftApi.ContactInfo> infos = AuskunftApi.query(normalizedNumber);
+    AuskunftApi.ContactInfo info = infos != null && !infos.isEmpty() ? infos.get(0) : null;
+    if (info == null) {
+      return null;
     }
+
+    return ContactBuilder.forReverseLookup(normalizedNumber, formattedNumber)
+        .setName(ContactBuilder.Name.createDisplayName(info.name))
+        .addPhoneNumber(ContactBuilder.PhoneNumber.createMainNumber(info.number))
+        .addWebsite(ContactBuilder.WebsiteUrl.createProfile(info.url))
+        .addAddress(ContactBuilder.Address.createFormattedHome(info.address))
+        .build();
+  }
 }

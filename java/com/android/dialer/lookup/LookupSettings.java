@@ -27,82 +27,77 @@ import lineageos.providers.LineageSettings;
 import java.util.List;
 
 public final class LookupSettings {
-    private static final String TAG = LookupSettings.class.getSimpleName();
+  private static final String TAG = LookupSettings.class.getSimpleName();
 
-    /** Forward lookup providers */
-    public static final String FLP_GOOGLE = "Google";
-    public static final String FLP_OPENSTREETMAP = "OpenStreetMap";
-    public static final String FLP_DEFAULT = FLP_GOOGLE;
+  /** Forward lookup providers */
+  public static final String FLP_GOOGLE = "Google";
+  public static final String FLP_OPENSTREETMAP = "OpenStreetMap";
+  public static final String FLP_DEFAULT = FLP_GOOGLE;
 
-    /** People lookup providers */
-    public static final String PLP_AUSKUNFT = "Auskunft";
-    public static final String PLP_DEFAULT = PLP_AUSKUNFT;
+  /** People lookup providers */
+  public static final String PLP_AUSKUNFT = "Auskunft";
+  public static final String PLP_DEFAULT = PLP_AUSKUNFT;
 
-    /** Reverse lookup providers */
-    public static final String RLP_OPENCNAM = "OpenCnam";
-    public static final String RLP_YELLOWPAGES = "YellowPages";
-    public static final String RLP_YELLOWPAGES_CA = "YellowPages_CA";
-    public static final String RLP_ZABASEARCH = "ZabaSearch";
-    public static final String RLP_CYNGN_CHINESE = "CyngnChinese";
-    public static final String RLP_DASTELEFONBUCH = "DasTelefonbuch";
-    public static final String RLP_AUSKUNFT = "Auskunft";
-    public static final String RLP_DEFAULT = RLP_OPENCNAM;
+  /** Reverse lookup providers */
+  public static final String RLP_OPENCNAM = "OpenCnam";
+  public static final String RLP_YELLOWPAGES = "YellowPages";
+  public static final String RLP_YELLOWPAGES_CA = "YellowPages_CA";
+  public static final String RLP_ZABASEARCH = "ZabaSearch";
+  public static final String RLP_CYNGN_CHINESE = "CyngnChinese";
+  public static final String RLP_DASTELEFONBUCH = "DasTelefonbuch";
+  public static final String RLP_AUSKUNFT = "Auskunft";
+  public static final String RLP_DEFAULT = RLP_OPENCNAM;
 
-    private LookupSettings() {
+  private LookupSettings() {
+  }
+
+  public static boolean isForwardLookupEnabled(Context context) {
+    return LineageSettings.System.getInt(context.getContentResolver(),
+        LineageSettings.System.ENABLE_FORWARD_LOOKUP, 0) != 0;
+  }
+
+  public static boolean isPeopleLookupEnabled(Context context) {
+    return LineageSettings.System.getInt(context.getContentResolver(),
+        LineageSettings.System.ENABLE_PEOPLE_LOOKUP, 0) != 0;
+  }
+
+  public static boolean isReverseLookupEnabled(Context context) {
+    return LineageSettings.System.getInt(context.getContentResolver(),
+        LineageSettings.System.ENABLE_REVERSE_LOOKUP, 0) != 0;
+  }
+
+  public static String getForwardLookupProvider(Context context) {
+    return getLookupProvider(context,
+        LineageSettings.System.FORWARD_LOOKUP_PROVIDER, FLP_DEFAULT);
+  }
+
+  public static String getPeopleLookupProvider(Context context) {
+    return getLookupProvider(context,
+        LineageSettings.System.PEOPLE_LOOKUP_PROVIDER, PLP_DEFAULT);
+  }
+
+  public static String getReverseLookupProvider(Context context) {
+    String provider = getLookupProvider(context,
+        LineageSettings.System.REVERSE_LOOKUP_PROVIDER, RLP_DEFAULT);
+
+    if ("Google".equals(provider)) {
+      LineageSettings.System.putString(context.getContentResolver(),
+          LineageSettings.System.REVERSE_LOOKUP_PROVIDER, RLP_DEFAULT);
+      provider = RLP_DEFAULT;
     }
 
-    public static boolean isForwardLookupEnabled(Context context) {
-        return LineageSettings.System.getInt(context.getContentResolver(),
-                LineageSettings.System.ENABLE_FORWARD_LOOKUP, 0) != 0;
+    return provider;
+  }
+
+  private static String getLookupProvider(Context context, String key, String defaultValue) {
+    ContentResolver cr = context.getContentResolver();
+    String provider = LineageSettings.System.getString(cr, key);
+
+    if (provider == null) {
+      LineageSettings.System.putString(cr, key, defaultValue);
+      return defaultValue;
     }
 
-    public static boolean isPeopleLookupEnabled(Context context) {
-        return LineageSettings.System.getInt(context.getContentResolver(),
-                LineageSettings.System.ENABLE_PEOPLE_LOOKUP, 0) != 0;
-    }
-
-    public static boolean isReverseLookupEnabled(Context context) {
-        return LineageSettings.System.getInt(context.getContentResolver(),
-                LineageSettings.System.ENABLE_REVERSE_LOOKUP, 0) != 0;
-    }
-
-    public static String getForwardLookupProvider(Context context) {
-        String provider = getLookupProvider(context,
-                LineageSettings.System.FORWARD_LOOKUP_PROVIDER, FLP_DEFAULT);
-
-        return provider;
-    }
-
-    public static String getPeopleLookupProvider(Context context) {
-        String provider = getLookupProvider(context,
-                LineageSettings.System.PEOPLE_LOOKUP_PROVIDER, PLP_DEFAULT);
-
-        return provider;
-    }
-
-    public static String getReverseLookupProvider(Context context) {
-        String provider = getLookupProvider(context,
-                LineageSettings.System.REVERSE_LOOKUP_PROVIDER, RLP_DEFAULT);
-
-        if ("Google".equals(provider)) {
-            LineageSettings.System.putString(context.getContentResolver(),
-                    LineageSettings.System.REVERSE_LOOKUP_PROVIDER, RLP_DEFAULT);
-            provider = RLP_DEFAULT;
-        }
-
-        return provider;
-    }
-
-    private static String getLookupProvider(Context context,
-            String key, String defaultValue) {
-        ContentResolver cr = context.getContentResolver();
-        String provider = LineageSettings.System.getString(cr, key);
-
-        if (provider == null) {
-            LineageSettings.System.putString(cr, key, defaultValue);
-            return defaultValue;
-        }
-
-        return provider;
-    }
+    return provider;
+  }
 }

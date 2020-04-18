@@ -22,10 +22,10 @@ import android.os.PowerManager;
 import android.os.Trace;
 import android.view.Display;
 import com.android.dialer.common.LogUtil;
-import com.android.dialer.configprovider.ConfigProviderBindings;
+import com.android.dialer.configprovider.ConfigProviderComponent;
 import com.android.incallui.call.DialerCall;
-import com.android.incallui.call.DialerCall.State;
 import com.android.incallui.call.DialerCallListener;
+import com.android.incallui.call.state.DialerCallState;
 
 import com.android.incallui.R;
 
@@ -49,13 +49,14 @@ public class AnswerProximitySensor
     Trace.beginSection("AnswerProximitySensor.shouldUse");
     // Don't use the AnswerProximitySensor for call waiting and other states. Those states are
     // handled by the general ProximitySensor code.
-    if (call.getState() != State.INCOMING) {
+    if (call.getState() != DialerCallState.INCOMING) {
       LogUtil.i("AnswerProximitySensor.shouldUse", "call state is not incoming");
       Trace.endSection();
       return false;
     }
 
-    if (!ConfigProviderBindings.get(context)
+    if (!ConfigProviderComponent.get(context)
+        .getConfigProvider()
         .getBoolean(CONFIG_ANSWER_PROXIMITY_SENSOR_ENABLED, true)) {
       LogUtil.i("AnswerProximitySensor.shouldUse", "disabled by config");
       Trace.endSection();
@@ -91,7 +92,8 @@ public class AnswerProximitySensor
     this.call = call;
 
     LogUtil.i("AnswerProximitySensor.constructor", "acquiring lock");
-    if (ConfigProviderBindings.get(context)
+    if (ConfigProviderComponent.get(context)
+        .getConfigProvider()
         .getBoolean(CONFIG_ANSWER_PSEUDO_PROXIMITY_WAKE_LOCK_ENABLED, true)) {
       answerProximityWakeLock = new PseudoProximityWakeLock(context, pseudoScreenState);
     } else {
@@ -136,7 +138,7 @@ public class AnswerProximitySensor
 
   @Override
   public void onDialerCallUpdate() {
-    if (call.getState() != State.INCOMING) {
+    if (call.getState() != DialerCallState.INCOMING) {
       LogUtil.i("AnswerProximitySensor.onDialerCallUpdate", "no longer incoming, cleaning up");
       cleanup();
     }

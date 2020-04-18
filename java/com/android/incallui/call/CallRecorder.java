@@ -36,6 +36,7 @@ import com.android.dialer.callrecord.CallRecording;
 import com.android.dialer.callrecord.ICallRecorderService;
 import com.android.dialer.callrecord.impl.CallRecorderService;
 import com.android.dialer.location.GeoUtil;
+import com.android.incallui.call.state.DialerCallState;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -229,7 +230,7 @@ public class CallRecorder implements CallList.Listener {
       CallRecording active = getActiveRecording();
       if (active != null) {
         DialerCall call =
-            callList.getCallWithStateAndNumber(DialerCall.State.ONHOLD, active.phoneNumber);
+            callList.getCallWithStateAndNumber(DialerCallState.ONHOLD, active.phoneNumber);
         if (call != null) {
           // The call associated with the active recording has been placed
           // on hold, so stop the recording.

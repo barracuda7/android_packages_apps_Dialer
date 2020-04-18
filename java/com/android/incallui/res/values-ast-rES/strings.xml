@@ -16,7 +16,6 @@
   ~ limitations under the License
   -->
 <resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="phoneAppLabel" product="default">Teléfonu</string>
   <string name="notification_dialing">Marcando</string>
   <string name="notification_ongoing_call">Llamada en cursu</string>
   <string name="notification_ongoing_video_call">Videu Llamada en cursu</string>

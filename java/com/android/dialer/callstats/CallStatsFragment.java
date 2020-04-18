@@ -40,10 +40,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.android.contacts.common.preference.ContactsPreferences;
 import com.android.dialer.R;
 import com.android.dialer.app.contactinfo.ExpirableCacheHeadlessFragment;
 import com.android.dialer.calllogutils.FilterSpinnerHelper;
+import com.android.dialer.contacts.ContactsComponent;
 import com.android.dialer.phonenumbercache.ContactInfo;
 import com.android.dialer.util.PermissionsUtil;
 import com.android.dialer.widget.EmptyContentView;
@@ -72,7 +72,6 @@ public class CallStatsFragment extends Fragment implements
   private LinearLayoutManager mLayoutManager;
   private CallStatsAdapter mAdapter;
   private CallStatsQueryHandler mCallStatsQueryHandler;
-  private ContactsPreferences mContactsPreferences;
   private FilterSpinnerHelper mFilterHelper;
 
   private TextView mSumHeaderView;
@@ -101,8 +100,8 @@ public class CallStatsFragment extends Fragment implements
 
     ExpirableCacheHeadlessFragment cacheFragment =
         ExpirableCacheHeadlessFragment.attach((AppCompatActivity) getActivity());
-    mContactsPreferences = new ContactsPreferences(getActivity());
-    mAdapter = new CallStatsAdapter(getActivity(), mContactsPreferences,
+    mAdapter = new CallStatsAdapter(getActivity(),
+        ContactsComponent.get(getActivity()).contactDisplayPreferences(),
         cacheFragment.getRetainedCache());
   }
 
@@ -257,7 +256,6 @@ public class CallStatsFragment extends Fragment implements
       getActivity().invalidateOptionsMenu();
     }
     mHasReadCallLogPermission = hasReadCallLogPermission;
-    mContactsPreferences.refreshValue(ContactsPreferences.DISPLAY_ORDER_KEY);
     refreshData();
     mAdapter.startCache();
   }

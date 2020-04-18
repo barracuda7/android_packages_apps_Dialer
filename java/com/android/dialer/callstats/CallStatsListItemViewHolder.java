@@ -30,6 +30,7 @@ import android.widget.TextView;
 
 import com.android.dialer.R;
 import com.android.dialer.contactphoto.ContactPhotoManager;
+import com.android.dialer.contacts.displaypreference.ContactDisplayPreferences;
 import com.android.dialer.lettertile.LetterTileDrawable;
 import com.android.dialer.location.GeoUtil;
 import com.android.dialer.phonenumbercache.ContactInfoHelper;
@@ -112,7 +113,8 @@ public final class CallStatsListItemViewHolder extends RecyclerView.ViewHolder
   }
 
   public void setDetails(CallStatsDetails details, CallStatsDetails first,
-      CallStatsDetails total, int type, boolean byDuration, int nameDisplayOrder) {
+      CallStatsDetails total, int type, boolean byDuration,
+      ContactDisplayPreferences.DisplayOrder nameDisplayOrder) {
     this.details = details;
     details.updateDisplayProperties(mContext, nameDisplayOrder);
 

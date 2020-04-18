@@ -17,10 +17,8 @@
   -->
 <resources>
   <string name="favorites_header">Annsachdan</string>
-  <string name="suggestions_header">Molaidhean</string>
   <string name="speed_dial_add_button_text">Cuir ris</string>
   <string name="speed_dial_remember_this_choice">Cuimhnich mo roghainn an-seo</string>
-  <string name="speed_dial_disambig_dialog_title">Tagh am modh as fheàrr leat</string>
   <string name="disambig_option_video_call">Gairm video</string>
   <string name="disambig_option_voice_call">Cuir fòn</string>
   <string name="add_favorite_activity_title">Cuir annsachd ris</string>

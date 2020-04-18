@@ -22,11 +22,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import com.android.contacts.common.extensions.PhoneDirectoryExtender;
 import com.android.contacts.common.extensions.PhoneDirectoryExtenderFactory;
-import com.android.contacts.common.list.DirectoryPartition;
 import com.android.dialer.binary.common.DialerApplication;
 import com.android.dialer.inject.ContextModule;
 import com.android.dialer.lookup.LookupCacheService;
 import com.android.dialer.lookup.LookupProvider;
+import com.android.dialer.lookup.LookupSettings;
 import com.android.dialer.lookup.ReverseLookupService;
 import com.android.dialer.phonenumbercache.CachedNumberLookupService;
 import com.android.dialer.phonenumbercache.PhoneNumberCacheBindings;
@@ -56,19 +56,15 @@ public class AospDialerApplication extends DialerApplication implements
   public PhoneDirectoryExtender newPhoneDirectoryExtender() {
     return new PhoneDirectoryExtender() {
       @Override
-      public List<DirectoryPartition> getExtendedDirectories(Context context) {
-        return LookupProvider.getExtendedDirectories(context);
-      }
-
-      @Override
       public boolean isEnabled(Context context) {
-        return false;
+        return LookupSettings.isForwardLookupEnabled(AospDialerApplication.this)
+            || LookupSettings.isPeopleLookupEnabled(AospDialerApplication.this);
       }
 
       @Override
       @Nullable
       public Uri getContentUri() {
-        return null;
+        return LookupProvider.NEARBY_AND_PEOPLE_LOOKUP_URI;
       }
     };
   }

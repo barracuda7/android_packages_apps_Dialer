@@ -19,7 +19,7 @@
   <string name="migrate_blocked_numbers_dialog_title">Dull rhwystro newydd a mwy syml</string>
   <string name="migrate_blocked_numbers_dialog_message">I dy warchod yn well, mae ar Ffôn angen newid sut mae rhwystro\'n gweithio. Bydd dy rifau sydd wedi\'u rhwystro nawr yn stopio galwadau a negeseuon testun a bydd hefyd yn bosib eu rhannu gydag apiau eraill.</string>
   <string name="migrate_blocked_numbers_dialog_allow_button">Caniatáu</string>
-  <string name="block_number_confirmation_title">    Rhwystro <xliff:g example="(555) 555-5555" id="number">%1$s</xliff:g>?
+  <string name="old_block_number_confirmation_title">    Rhwystro <xliff:g example="(555) 555-5555" id="number">%1$s</xliff:g>?
   </string>
   <string name="block_number_confirmation_message_vvm">Caiff galwadau o\'r rhif hwn eu rhwystro a bydd negeseuon llais yn cael eu dileu yn awtomatig.
   </string>
@@ -36,7 +36,6 @@
   </string>
   <string name="snackbar_number_unblocked">    Dadrwystrwyd <xliff:g example="(555) 555-5555" id="number">%1$s</xliff:g>
   </string>
-  <string name="block_number_undo">DADWNEUD</string>
   <string name="send_to_voicemail_import_failed">Methwyd â mewnforio</string>
   <string name="call_blocking_disabled_notification_title">Mae rhwystro galwadau wedi ei analluogi am 48 awr  </string>
   <string name="call_blocking_disabled_notification_text">Wedi\'i analluogi gan fod galwad brys wedi ei gwneud.  </string>

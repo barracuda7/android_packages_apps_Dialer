@@ -26,6 +26,7 @@ import android.telecom.DisconnectCause;
 
 import com.android.incallui.call.CallList;
 import com.android.incallui.call.DialerCall;
+import com.android.incallui.call.state.DialerCallState;
 import com.android.incallui.InCallPresenter.InCallState;
 
 public class InCallVibrationHandler extends Handler implements
@@ -102,7 +103,7 @@ public class InCallVibrationHandler extends Handler implements
     DisconnectCause cause = call.getDisconnectCause();
     boolean localDisconnect =
         // Disconnection not yet processed
-        call.getState() == DialerCall.State.DISCONNECTING ||
+        call.getState() == DialerCallState.DISCONNECTING ||
         // Disconnection already processed
         (cause != null && cause.getCode() == DisconnectCause.LOCAL);
 

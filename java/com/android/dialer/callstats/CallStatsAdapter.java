@@ -27,12 +27,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.contacts.common.preference.ContactsPreferences;
 import com.android.dialer.R;
 import com.android.dialer.app.DialtactsActivity;
 import com.android.dialer.app.contactinfo.ContactInfoCache;
 import com.android.dialer.app.contactinfo.NumberWithCountryIso;
 import com.android.dialer.clipboard.ClipboardUtils;
+import com.android.dialer.contacts.displaypreference.ContactDisplayPreferences;
 import com.android.dialer.location.GeoUtil;
 import com.android.dialer.phonenumbercache.ContactInfo;
 import com.android.dialer.phonenumbercache.ContactInfoHelper;
@@ -55,7 +55,7 @@ class CallStatsAdapter extends RecyclerView.Adapter {
   private final Context mContext;
   private final ContactInfoHelper mContactInfoHelper;
   private final ContactInfoCache mContactInfoCache;
-  private final ContactsPreferences mContactsPreferences;
+  private final ContactDisplayPreferences mContactDisplayPreferences;
 
   private ArrayList<CallStatsDetails> mAllItems;
   private ArrayList<CallStatsDetails> mShownItems;
@@ -121,10 +121,10 @@ class CallStatsAdapter extends RecyclerView.Adapter {
     return count2.compareTo(count1);
   };
 
-  CallStatsAdapter(Context context, ContactsPreferences prefs,
+  CallStatsAdapter(Context context, ContactDisplayPreferences prefs,
       ExpirableCache<NumberWithCountryIso,ContactInfo> cache) {
     mContext = context;
-    mContactsPreferences = prefs;
+    mContactDisplayPreferences = prefs;
 
     final String currentCountryIso = GeoUtil.getCurrentCountryIso(mContext);
     mContactInfoHelper = new ContactInfoHelper(mContext, currentCountryIso);
@@ -222,7 +222,7 @@ class CallStatsAdapter extends RecyclerView.Adapter {
       }
     }
     views.setDetails(details, first, mTotalItem, mType,
-        mSortByDuration, mContactsPreferences.getDisplayOrder());
+        mSortByDuration, mContactDisplayPreferences.getDisplayOrder());
     views.clickIntent = getItemClickIntent(details);
   }
 

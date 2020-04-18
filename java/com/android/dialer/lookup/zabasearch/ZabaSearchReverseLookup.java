@@ -16,48 +16,42 @@
 
 package com.android.dialer.lookup.zabasearch;
 
+import android.content.Context;
+
 import com.android.dialer.phonenumbercache.ContactInfo;
 import com.android.dialer.lookup.ContactBuilder;
 import com.android.dialer.lookup.ReverseLookup;
 
-import android.content.Context;
-
 import java.io.IOException;
 
 public class ZabaSearchReverseLookup extends ReverseLookup {
-    private static final String TAG =
-            ZabaSearchReverseLookup.class.getSimpleName();
+  private static final String TAG = ZabaSearchReverseLookup.class.getSimpleName();
 
-    public ZabaSearchReverseLookup(Context context) {
+  public ZabaSearchReverseLookup(Context context) {
+  }
+
+  /**
+   * Perform phone number lookup.
+   *
+   * @param context The application context
+   * @param normalizedNumber The normalized phone number
+   * @param formattedNumber The formatted phone number
+   * @return The phone number info object
+   */
+  @Override
+  public ContactInfo lookupNumber(Context context,
+      String normalizedNumber, String formattedNumber) throws IOException {
+    ZabaSearchApi zsa = new ZabaSearchApi(normalizedNumber);
+    ZabaSearchApi.ContactInfo info = zsa.getContactInfo();
+    if (info.name == null) {
+        return null;
     }
 
-    /**
-     * Perform phone number lookup.
-     *
-     * @param context The application context
-     * @param normalizedNumber The normalized phone number
-     * @param formattedNumber The formatted phone number
-     * @return The phone number info object
-     */
-    public ContactInfo lookupNumber(Context context,
-            String normalizedNumber, String formattedNumber) throws IOException {
-        ZabaSearchApi zsa = new ZabaSearchApi(normalizedNumber);
-        ZabaSearchApi.ContactInfo info = zsa.getContactInfo();
-        if (info.name == null) {
-            return null;
-        }
-
-        ContactBuilder builder = new ContactBuilder(
-                ContactBuilder.REVERSE_LOOKUP,
-                normalizedNumber, formattedNumber);
-
-        builder.setName(ContactBuilder.Name.createDisplayName(info.name));
-        builder.addPhoneNumber(ContactBuilder.PhoneNumber.createMainNumber(info.formattedNumber));
-        builder.addWebsite(ContactBuilder.WebsiteUrl.createProfile(info.website));
-        if (info.address != null) {
-            builder.addAddress(ContactBuilder.Address.createFormattedHome(info.address));
-        }
-
-        return builder.build();
-    }
+    return ContactBuilder.forReverseLookup(normalizedNumber, formattedNumber)
+        .setName(ContactBuilder.Name.createDisplayName(info.name))
+        .addPhoneNumber(ContactBuilder.PhoneNumber.createMainNumber(info.formattedNumber))
+        .addWebsite(ContactBuilder.WebsiteUrl.createProfile(info.website))
+        .addAddress(ContactBuilder.Address.createFormattedHome(info.address))
+        .build();
+  }
 }

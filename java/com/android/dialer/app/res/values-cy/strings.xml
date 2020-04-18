@@ -25,7 +25,6 @@
   <string name="call_log_delete_all">Clirio hanes galwadau</string>
   <string name="call_log_trash_voicemail">Dileu neges lleisbost</string>
   <string name="snackbar_voicemail_deleted">Neges lleisbost wedi ei dileu</string>
-  <string name="snackbar_voicemail_deleted_undo">DADWNEUD</string>
   <string name="clearCallLogConfirmation_title">Clirio hanes galwadau?</string>
   <string name="clearCallLogConfirmation">Bydd hyn yn dileu\'r holl alwadau o dy hanes.</string>
   <string name="clearCallLogProgress_title">Yn clirio hanes galwadau\u2026</string>
@@ -211,9 +210,9 @@
   <string name="voicemail_transcription_failed_language_not_supported">Trawsgrifiad dim ar gael. Ni chefnogir yr iaith honno.</string>
   <string name="voicemail_transcription_failed_no_speech">Trawsgrifiad dim ar gael. Ni adnabuwyd llais.</string>
   <string name="voicemail_donation_promo_title">Helpu i wella cywirdeb trawsgrifio?</string>
-  <string name="voicemail_donation_promo_content">Gad i Google adolygu hyn a negeseuon lleisbost gyda thrawsgrifiadau yn y dyfodol.
-Caiff eu cadw\'n ddienw. Gellir newid y Gosodiadau unrhyw bryd.  </string>
-  <string name="voicemail_donation_promo_learn_more">Dysgu mwy</string>
+  <string name="voicemail_donation_promo_content">    Caniatáu i Google adolygu hwn a negeseuon lleisbost gyda thrawsgrifiadau yn y dyfodol.
+    Caiff eu storio yn ddienw. Gellir newid y Gosodiadau unrhyw bryd. <xliff:g example="Learn more">%1$s</xliff:g>
+  </string>
   <string name="voicemail_donation_promo_opt_in">Ie, iawn</string>
   <string name="voicemail_donation_promo_opt_out">Dim diolch</string>
   <string name="voicemail_transcription_rating">Graddio ansawdd trawsgrifiad</string>

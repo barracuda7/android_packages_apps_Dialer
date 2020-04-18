@@ -16,7 +16,6 @@
   ~ limitations under the License
   -->
 <resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="phoneAppLabel" product="default">Ffôn</string>
   <string name="wait_prompt_str">Anfon y tonau canlynol?\n</string>
   <string name="pause_prompt_yes">Iawn</string>
   <string name="pause_prompt_no">Na</string>
@@ -67,7 +66,6 @@
   <string name="incall_error_supp_service_unknown">Gwasanaeth heb ei gefnogi.</string>
   <string name="goPrivate">mynd yn breifat</string>
   <string name="manageConferenceLabel" tools:ignore="UnusedResources">Rheoli galwad grŵp</string>
-  <string name="emergency_call_dialog_number_for_display">Rhif mewn argyfwng</string>
   <string name="child_number">trwy <xliff:g example="650-555-1212" id="child_number">%s</xliff:g></string>
   <string name="callFailed_simError">Dim SIM neu wall SIM</string>
   <string name="conference_caller_disconnect_content_description">Gorffen yr alwad</string>
@@ -78,4 +76,9 @@
   <string name="video_call_lte_to_wifi_failed_message">Bydd yr alwad fideo yn parhau ar y rhwydwaith symudol. Bydd unrhyw gostau defnydd data fel yr arfer.  </string>
   <string name="video_call_lte_to_wifi_failed_do_not_show">Peidio â dangos hwn eto</string>
   <string name="bubble_return_to_call">Nôl i\'r alwad</string>
+  <string name="rtt_request_dialog_title">Ymuno â galwad RTT?</string>
+  <string name="rtt_request_dialog_details">Mae <xliff:g id="caller">%1$s</xliff:g> eisiau defnyddio negesu o fewn eich galwad llais.</string>
+  <string name="rtt_request_dialog_more_information">Mae RTT yn cynorthwyo galwyr byddar, trwm eu clyw, gyda nam ar eu lleferydd, neu angen mwy nag un llais yn unig.</string>
+  <string name="rtt_button_decline_request">Dim diolch</string>
+  <string name="rtt_button_accept_request">Ymuno ag RTT</string>
 </resources>

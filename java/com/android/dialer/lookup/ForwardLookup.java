@@ -16,47 +16,48 @@
 
 package com.android.dialer.lookup;
 
-import com.android.dialer.phonenumbercache.ContactInfo;
-import com.android.dialer.lookup.google.GoogleForwardLookup;
-import com.android.dialer.lookup.openstreetmap.OpenStreetMapForwardLookup;
-
 import android.content.Context;
 import android.location.Location;
 import android.util.Log;
 
+import com.android.dialer.phonenumbercache.ContactInfo;
+import com.android.dialer.lookup.google.GoogleForwardLookup;
+import com.android.dialer.lookup.openstreetmap.OpenStreetMapForwardLookup;
+
+import java.util.List;
+
 public abstract class ForwardLookup {
-    private static final String TAG = ForwardLookup.class.getSimpleName();
+  private static final String TAG = ForwardLookup.class.getSimpleName();
 
-    private static ForwardLookup INSTANCE = null;
+  private static ForwardLookup INSTANCE = null;
 
-    public static ForwardLookup getInstance(Context context) {
-        String provider = LookupSettings.getForwardLookupProvider(context);
+  public static ForwardLookup getInstance(Context context) {
+    String provider = LookupSettings.getForwardLookupProvider(context);
 
-        if (INSTANCE == null || !isInstance(provider)) {
-            Log.d(TAG, "Chosen forward lookup provider: " + provider);
+    if (INSTANCE == null || !isInstance(provider)) {
+      Log.d(TAG, "Chosen forward lookup provider: " + provider);
 
-            if (provider.equals(LookupSettings.FLP_GOOGLE)) {
-                INSTANCE = new GoogleForwardLookup(context);
-            } else if (provider.equals(LookupSettings.FLP_OPENSTREETMAP)) {
-                INSTANCE = new OpenStreetMapForwardLookup(context);
-            }
-        }
-
-        return INSTANCE;
+      if (provider.equals(LookupSettings.FLP_GOOGLE)) {
+        INSTANCE = new GoogleForwardLookup(context);
+      } else if (provider.equals(LookupSettings.FLP_OPENSTREETMAP)) {
+        INSTANCE = new OpenStreetMapForwardLookup(context);
+      }
     }
 
-    private static boolean isInstance(String provider) {
-        if (provider.equals(LookupSettings.FLP_GOOGLE)
-                && INSTANCE instanceof GoogleForwardLookup) {
-            return true;
-        } else if (provider.equals(LookupSettings.FLP_OPENSTREETMAP)
-                && INSTANCE instanceof OpenStreetMapForwardLookup) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    return INSTANCE;
+  }
 
-    public abstract ContactInfo[] lookup(Context context,
-            String filter, Location lastLocation);
+  private static boolean isInstance(String provider) {
+    if (provider.equals(LookupSettings.FLP_GOOGLE)
+        && INSTANCE instanceof GoogleForwardLookup) {
+      return true;
+    } else if (provider.equals(LookupSettings.FLP_OPENSTREETMAP)
+        && INSTANCE instanceof OpenStreetMapForwardLookup) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public abstract List<ContactInfo> lookup(Context context, String filter, Location lastLocation);
 }

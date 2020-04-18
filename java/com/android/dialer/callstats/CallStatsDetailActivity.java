@@ -33,7 +33,6 @@ import android.view.View;
 import android.widget.QuickContactBadge;
 import android.widget.TextView;
 
-import com.android.contacts.common.preference.ContactsPreferences;
 import com.android.dialer.R;
 import com.android.dialer.app.AccountSelectionActivity;
 import com.android.dialer.callintent.CallInitiationType;
@@ -41,6 +40,8 @@ import com.android.dialer.callintent.CallIntentBuilder;
 import com.android.dialer.calllogutils.CallTypeIconsView;
 import com.android.dialer.clipboard.ClipboardUtils;
 import com.android.dialer.contactphoto.ContactPhotoManager;
+import com.android.dialer.contacts.ContactsComponent;
+import com.android.dialer.contacts.displaypreference.ContactDisplayPreferences;
 import com.android.dialer.lettertile.LetterTileDrawable;
 import com.android.dialer.location.GeoUtil;
 import com.android.dialer.phonenumbercache.ContactInfo;
@@ -62,7 +63,7 @@ public class CallStatsDetailActivity extends AppCompatActivity implements
   public static final String EXTRA_TO = "to";
 
   private ContactInfoHelper mContactInfoHelper;
-  private ContactsPreferences mContactsPreferences;
+  private ContactDisplayPreferences mContactDisplayPreferences;
   private Resources mResources;
 
   private QuickContactBadge mQuickContactBadge;
@@ -115,7 +116,7 @@ public class CallStatsDetailActivity extends AppCompatActivity implements
 
     mResources = getResources();
     mContactInfoHelper = new ContactInfoHelper(this, GeoUtil.getCurrentCountryIso(this));
-    mContactsPreferences = new ContactsPreferences(this);
+    mContactDisplayPreferences = ContactsComponent.get(this).contactDisplayPreferences();
 
     mQuickContactBadge = (QuickContactBadge) findViewById(R.id.quick_contact_photo);
     mQuickContactBadge.setOverlay(null);
@@ -176,7 +177,6 @@ public class CallStatsDetailActivity extends AppCompatActivity implements
   @Override
   public void onResume() {
     super.onResume();
-    mContactsPreferences.refreshValue(ContactsPreferences.DISPLAY_ORDER_KEY);
     new UpdateContactTask().execute(mData.number.toString(), mData.countryIso);
   }
 
@@ -189,7 +189,7 @@ public class CallStatsDetailActivity extends AppCompatActivity implements
         ? Phone.getTypeLabel(mResources, mData.numberType, mData.numberLabel)
         : mData.geocode;
 
-    mData.updateDisplayProperties(this, mContactsPreferences.getDisplayOrder());
+    mData.updateDisplayProperties(this, mContactDisplayPreferences.getDisplayOrder());
 
     final boolean isSipNumber = PhoneNumberHelper.isSipNumber(mNumber);
     boolean hasEditNumberBeforeCallOption =

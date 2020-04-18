@@ -32,78 +32,73 @@ import lineageos.providers.LineageSettings;
 import java.io.IOException;
 
 public class OpenCnamReverseLookup extends ReverseLookup {
-    private static final String TAG =
-            OpenCnamReverseLookup.class.getSimpleName();
+  private static final String TAG = OpenCnamReverseLookup.class.getSimpleName();
 
-    private static final boolean DEBUG = false;
+  private static final boolean DEBUG = false;
 
-    private static final String LOOKUP_URL =
-            "https://api.opencnam.com/v2/phone/";
+  private static final String LOOKUP_URL = "https://api.opencnam.com/v2/phone/";
 
-    /** Query parameters for paid accounts */
-    private static final String ACCOUNT_SID = "account_sid";
-    private static final String AUTH_TOKEN = "auth_token";
+  /** Query parameters for paid accounts */
+  private static final String ACCOUNT_SID = "account_sid";
+  private static final String AUTH_TOKEN = "auth_token";
 
-    public OpenCnamReverseLookup(Context context) {
+  public OpenCnamReverseLookup(Context context) {
+  }
+
+  /**
+   * Perform phone number lookup.
+   *
+   * @param context The application context
+   * @param normalizedNumber The normalized phone number
+   * @param formattedNumber The formatted phone number
+   * @return The phone number info object
+   */
+  @Override
+  public ContactInfo lookupNumber(Context context,
+      String normalizedNumber, String formattedNumber) throws IOException {
+    if (normalizedNumber.startsWith("+") && !normalizedNumber.startsWith("+1")) {
+      // Any non-US number will return "We currently accept only US numbers"
+      return null;
     }
 
-    /**
-     * Perform phone number lookup.
-     *
-     * @param context The application context
-     * @param normalizedNumber The normalized phone number
-     * @param formattedNumber The formatted phone number
-     * @return The phone number info object
-     */
-    public ContactInfo lookupNumber(Context context,
-            String normalizedNumber, String formattedNumber) throws IOException {
-        if (normalizedNumber.startsWith("+") && !normalizedNumber.startsWith("+1")) {
-            // Any non-US number will return "We currently accept only US numbers"
-            return null;
-        }
+    String displayName = httpGetRequest(context, normalizedNumber);
+    if (DEBUG) Log.d(TAG, "Reverse lookup returned name: " + displayName);
 
-        String displayName = httpGetRequest(context, normalizedNumber);
-        if (DEBUG) Log.d(TAG, "Reverse lookup returned name: " + displayName);
+    // Check displayName. The free tier of the service will return the
+    // following for some numbers:
+    // "CNAM for phone "NORMALIZED" is currently unavailable for Hobbyist Tier users."
 
-        // Check displayName. The free tier of the service will return the
-        // following for some numbers:
-        // "CNAM for phone "NORMALIZED" is currently unavailable for Hobbyist Tier users."
-
-        if (displayName.contains("Hobbyist Tier")) {
-            return null;
-        }
-
-        String number = formattedNumber != null
-                ? formattedNumber : normalizedNumber;
-
-        ContactBuilder builder = new ContactBuilder(
-                ContactBuilder.REVERSE_LOOKUP,
-                normalizedNumber, formattedNumber);
-        builder.setName(ContactBuilder.Name.createDisplayName(displayName));
-        builder.addPhoneNumber(ContactBuilder.PhoneNumber.createMainNumber(number));
-        builder.setPhotoUri(ContactBuilder.PHOTO_URI_BUSINESS);
-
-        return builder.build();
+    if (displayName.contains("Hobbyist Tier")) {
+      return null;
     }
 
-    private String httpGetRequest(Context context, String number) throws IOException {
-        Uri.Builder builder = Uri.parse(LOOKUP_URL + number).buildUpon();
+    String number = formattedNumber != null ? formattedNumber : normalizedNumber;
 
-        // Paid account
-        String accountSid = LineageSettings.System.getString(
-                context.getContentResolver(),
-                LineageSettings.System.DIALER_OPENCNAM_ACCOUNT_SID);
-        String authToken = LineageSettings.System.getString(
-                context.getContentResolver(),
-                LineageSettings.System.DIALER_OPENCNAM_AUTH_TOKEN);
+    return ContactBuilder.forReverseLookup(normalizedNumber, formattedNumber)
+        .setName(ContactBuilder.Name.createDisplayName(displayName))
+        .addPhoneNumber(ContactBuilder.PhoneNumber.createMainNumber(number))
+        .setPhotoUri(ContactBuilder.PHOTO_URI_BUSINESS)
+        .build();
+  }
 
-        if (!TextUtils.isEmpty(accountSid) && !TextUtils.isEmpty(authToken)) {
-            Log.d(TAG, "Using paid account");
+  private String httpGetRequest(Context context, String number) throws IOException {
+    Uri.Builder builder = Uri.parse(LOOKUP_URL + number).buildUpon();
 
-            builder.appendQueryParameter(ACCOUNT_SID, accountSid);
-            builder.appendQueryParameter(AUTH_TOKEN, authToken);
-        }
+    // Paid account
+    String accountSid = LineageSettings.System.getString(
+        context.getContentResolver(),
+        LineageSettings.System.DIALER_OPENCNAM_ACCOUNT_SID);
+    String authToken = LineageSettings.System.getString(
+        context.getContentResolver(),
+        LineageSettings.System.DIALER_OPENCNAM_AUTH_TOKEN);
 
-        return LookupUtils.httpGet(builder.build().toString(), null);
+    if (!TextUtils.isEmpty(accountSid) && !TextUtils.isEmpty(authToken)) {
+      Log.d(TAG, "Using paid account");
+
+      builder.appendQueryParameter(ACCOUNT_SID, accountSid);
+      builder.appendQueryParameter(AUTH_TOKEN, authToken);
     }
+
+    return LookupUtils.httpGet(builder.build().toString(), null);
+  }
 }

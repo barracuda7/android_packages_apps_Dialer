@@ -19,8 +19,8 @@
   <string name="description_dialpad_back">Mynd nôl</string>
   <string name="description_dialpad_overflow">Rhagor o ddewisiadau</string>
   <string name="description_delete_button">bysell backspace</string>
-  <string name="description_image_button_plus">plws</string>
-  <string name="description_voicemail_button">lleisbost</string>
+  <string name="description_image_button_plus">deial plws</string>
+  <string name="description_voicemail_button">galw lleisbost</string>
   <string name="description_dial_button">deialu</string>
   <string name="dialog_voicemail_airplane_mode_message">I alw\'r lleisbost, rhaid yn gyntaf troi modd awyren i ffwrdd.</string>
   <string name="dialog_voicemail_not_ready_message">I osod y lleisbost, gweler Dewislen &gt; Gosodiadau.</string>
@@ -34,5 +34,6 @@
   <string name="simContacts_emptyLoading">Yn llwytho o gerdyn SIM\u2026</string>
   <string name="simContacts_title">Cysylltiadau cerdyn SIM</string>
   <string name="menu_callNumber">Galw <xliff:g id="number">%s</xliff:g></string>
-  <string msgid="4313552620858880999" name="dialog_phone_call_prohibited_message">Methu â galw\'r rhif hwn</string>
+  <string name="dialpad_hint_emergency_calling_not_available">Methu â gwneud galwadau brys dros Wi-Fi</string>
+  <string name="dialog_phone_call_prohibited_message" msgid="4313552620858880999">Methu â galw\'r rhif hwn</string>
 </resources>

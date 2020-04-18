@@ -25,6 +25,8 @@ import android.telecom.PhoneAccountHandle;
 import android.text.TextUtils;
 
 import com.android.contacts.common.widget.SelectPhoneAccountDialogFragment;
+import com.android.contacts.common.widget.SelectPhoneAccountDialogOptions;
+import com.android.contacts.common.widget.SelectPhoneAccountDialogOptionsUtil;
 import com.android.dialer.callintent.CallInitiationType;
 import com.android.dialer.callintent.CallIntentBuilder;
 import com.android.dialer.util.CallUtil;
@@ -85,8 +87,13 @@ public class AccountSelectionActivity extends AppCompatActivity {
 
     if (getFragmentManager().findFragmentByTag("dialog") == null) {
       List<PhoneAccountHandle> handles = getIntent().getParcelableArrayListExtra("accountHandles");
-      SelectPhoneAccountDialogFragment dialog = SelectPhoneAccountDialogFragment.newInstance(
-        R.string.call_via_dialog_title, false, 0, handles, listener, null, null);
+      SelectPhoneAccountDialogOptions options = SelectPhoneAccountDialogOptionsUtil
+          .builderWithAccounts(handles)
+          .setTitle(R.string.call_via_dialog_title)
+          .setCanSetDefault(false)
+          .build();
+      SelectPhoneAccountDialogFragment dialog =
+          SelectPhoneAccountDialogFragment.newInstance(options, listener);
 
       dialog.show(getFragmentManager(), "dialog");
     }

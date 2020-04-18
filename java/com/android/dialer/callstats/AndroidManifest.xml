@@ -20,7 +20,7 @@
 
     <activity android:name=".callstats.CallStatsDetailActivity"
       android:label="@string/call_stats_detail_title"
-      android:theme="@style/DialerThemeBase.NoActionBar"
+      android:theme="@style/Dialer.ThemeBase.NoActionBar"
       android:screenOrientation="portrait">
       <intent-filter>
         <action android:name="android.intent.action.VIEW" />

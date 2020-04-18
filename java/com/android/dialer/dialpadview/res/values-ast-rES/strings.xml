@@ -30,5 +30,5 @@
   <string name="simContacts_emptyLoading">Cargando dende tarxeta SIM\u2026</string>
   <string name="simContacts_title">Contautos de tarxeta SIM</string>
   <string name="menu_callNumber">Llamar a <xliff:g id="Number">%s</xliff:g></string>
-  <string msgid="4313552620858880999" name="dialog_phone_call_prohibited_message">Nun pue llamase a esti númberu</string>
+  <string name="dialog_phone_call_prohibited_message" msgid="4313552620858880999">Nun pue llamase a esti númberu</string>
 </resources>

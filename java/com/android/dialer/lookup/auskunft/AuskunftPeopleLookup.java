@@ -24,23 +24,34 @@ import com.android.dialer.lookup.ContactBuilder;
 import com.android.dialer.lookup.PeopleLookup;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AuskunftPeopleLookup extends PeopleLookup {
-    private static final String TAG = AuskunftPeopleLookup.class.getSimpleName();
+  private static final String TAG = AuskunftPeopleLookup.class.getSimpleName();
 
-    public AuskunftPeopleLookup(Context context) {
-    }
+  public AuskunftPeopleLookup(Context context) {
+  }
 
-    @Override
-    public ContactInfo[] lookup(Context context, String filter) {
-        List<ContactInfo> infos = null;
-        try {
-            infos = AuskunftApi.query(filter, ContactBuilder.PEOPLE_LOOKUP, null, null);
-        } catch (IOException e) {
-            Log.e(TAG, "People lookup failed", e);
-        }
-        return (infos != null && !infos.isEmpty())
-                ? infos.toArray(new ContactInfo[infos.size()]) : null;
+  @Override
+  public List<ContactInfo> lookup(Context context, String filter) {
+    try {
+      List<AuskunftApi.ContactInfo> infos = AuskunftApi.query(filter);
+      if (infos != null) {
+          List<ContactInfo> result = new ArrayList<>();
+          for (AuskunftApi.ContactInfo info : infos) {
+            result.add(ContactBuilder.forPeopleLookup(info.number)
+                .setName(ContactBuilder.Name.createDisplayName(info.name))
+                .addPhoneNumber(ContactBuilder.PhoneNumber.createMainNumber(info.number))
+                .addWebsite(ContactBuilder.WebsiteUrl.createProfile(info.url))
+                .addAddress(ContactBuilder.Address.createFormattedHome(info.address))
+                .build());
+          }
+          return result;
+      }
+    } catch (IOException e) {
+      Log.e(TAG, "People lookup failed", e);
     }
+    return null;
+  }
 }

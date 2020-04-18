@@ -19,7 +19,7 @@
   <string name="migrate_blocked_numbers_dialog_title">Bloquéu nuevu y acencielláu</string>
   <string name="migrate_blocked_numbers_dialog_message">Pa protexete meyor, Teléfonu precisa camudar cómo funciona\'l bloquéu. Los tos númberos bloquiaos agora pararán llamaes y Sms, y quiciabes se compartan con otres aplicaciones.</string>
   <string name="migrate_blocked_numbers_dialog_allow_button">Permitir</string>
-  <string name="block_number_confirmation_title">    ¿Torgar<xliff:g example="(555) 555-5555" id="number">%1$s</xliff:g>?
+  <string name="old_block_number_confirmation_title">    ¿Torgar<xliff:g example="(555) 555-5555" id="number">%1$s</xliff:g>?
   </string>
   <string name="block_number_confirmation_message_vvm">        Bloquiaránse les llamaes d\'esti númberu y desaniciaránse automáticamente los mensaxes de voz.
   </string>
@@ -33,7 +33,6 @@
   </string>
   <string name="snackbar_number_blocked">        <xliff:g example="(555) 555-5555" id="number">%1$s</xliff:g> torgáu  </string>
   <string name="snackbar_number_unblocked">        <xliff:g example="(555) 555-5555" id="number">%1$s</xliff:g>destorgáu  </string>
-  <string name="block_number_undo">DESFACER</string>
   <string name="send_to_voicemail_import_failed">Falló la importación</string>
   <string name="call_blocking_disabled_notification_title">        Desactivóse\'l bloquéu de llamaes pa 48 hores
   </string>

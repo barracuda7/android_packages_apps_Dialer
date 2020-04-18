@@ -17,6 +17,7 @@
   -->
 <resources>
   <string name="incall_label_videocall">Galwad fideo</string>
+  <string name="incall_label_rttcall">RTT</string>
   <string name="incall_label_hold">Aros</string>
   <string name="incall_label_add_call">Ychwanegu galwad</string>
   <string name="incall_label_mute">Distewi</string>

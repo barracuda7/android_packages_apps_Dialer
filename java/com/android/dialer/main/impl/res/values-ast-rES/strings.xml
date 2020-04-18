@@ -16,7 +16,6 @@
   ~ limitations under the License
   -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-  <string name="nui_shortcut_name">Teléfonu NUI</string>
   <string name="dialpad_activity_title">Tecláu del teléfonu</string>
   <string name="description_search">Buscar contautos y sitios</string>
   <string name="voice_search_not_available">Gueta por voz non disponible</string>

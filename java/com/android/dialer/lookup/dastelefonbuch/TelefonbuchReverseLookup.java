@@ -29,41 +29,37 @@ import com.android.dialer.lookup.ReverseLookup;
 import java.io.IOException;
 
 public class TelefonbuchReverseLookup extends ReverseLookup {
-    private static final String TAG = TelefonbuchReverseLookup.class.getSimpleName();
+  private static final String TAG = TelefonbuchReverseLookup.class.getSimpleName();
 
-    public TelefonbuchReverseLookup(Context context) {
+  public TelefonbuchReverseLookup(Context context) {
+  }
+
+  /**
+   * Perform phone number lookup.
+   *
+   * @param context The application context
+   * @param normalizedNumber The normalized phone number
+   * @param formattedNumber The formatted phone number
+   * @return The phone number info object
+   */
+  @Override
+  public ContactInfo lookupNumber(Context context,
+      String normalizedNumber, String formattedNumber) throws IOException {
+    if (normalizedNumber.startsWith("+") && !normalizedNumber.startsWith("+49")) {
+      // Das Telefonbuch only supports German numbers
+      return null;
     }
 
-    /**
-     * Perform phone number lookup.
-     *
-     * @param context The application context
-     * @param normalizedNumber The normalized phone number
-     * @param formattedNumber The formatted phone number
-     * @return The phone number info object
-     */
-    public ContactInfo lookupNumber(Context context,
-            String normalizedNumber, String formattedNumber) throws IOException {
-        if (normalizedNumber.startsWith("+") && !normalizedNumber.startsWith("+49")) {
-            // Das Telefonbuch only supports German numbers
-            return null;
-        }
-
-        TelefonbuchApi.ContactInfo info = TelefonbuchApi.reverseLookup(context, normalizedNumber);
-        if (info == null) {
-            return null;
-        }
-
-        ContactBuilder builder = new ContactBuilder(
-                ContactBuilder.REVERSE_LOOKUP,
-                normalizedNumber, formattedNumber);
-        builder.setName(ContactBuilder.Name.createDisplayName(info.name));
-        builder.addPhoneNumber(ContactBuilder.PhoneNumber.createMainNumber(info.formattedNumber));
-        builder.addWebsite(ContactBuilder.WebsiteUrl.createProfile(info.website));
-        if (info.address != null) {
-            builder.addAddress(ContactBuilder.Address.createFormattedHome(info.address));
-        }
-
-        return builder.build();
+    TelefonbuchApi.ContactInfo info = TelefonbuchApi.reverseLookup(context, normalizedNumber);
+    if (info == null) {
+      return null;
     }
+
+    return ContactBuilder.forReverseLookup(normalizedNumber, formattedNumber)
+        .setName(ContactBuilder.Name.createDisplayName(info.name))
+        .addPhoneNumber(ContactBuilder.PhoneNumber.createMainNumber(info.formattedNumber))
+        .addWebsite(ContactBuilder.WebsiteUrl.createProfile(info.website))
+        .addAddress(ContactBuilder.Address.createFormattedHome(info.address))
+        .build();
+  }
 }

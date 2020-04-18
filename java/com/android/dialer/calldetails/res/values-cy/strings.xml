@@ -29,4 +29,6 @@
   <string name="report_caller_id_toast">Wedi adrodd am y rhif</string>
   <string name="assisted_dialing_country_code_entry">Deialu cynorthwyedig: Defnyddiwyd cod gwlad +<xliff:g example="1" id="ad_country_code">%1$s</xliff:g></string>
   <string name="assisted_dialing_country_code_entry_failure">Defnyddiwyd deialu cynorthwyedig</string>
+  <string name="rtt_transcript_not_available">Trawsgrifiad ar gael dim ond ar gyfer galwadau gyda negesu</string>
+  <string name="rtt_transcript_link">Gweld y trawsgrifiad</string>
 </resources>

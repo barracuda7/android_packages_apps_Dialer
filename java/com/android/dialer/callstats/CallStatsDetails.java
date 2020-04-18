@@ -27,8 +27,8 @@ import android.text.BidiFormatter;
 import android.text.TextDirectionHeuristics;
 import android.text.TextUtils;
 
-import com.android.contacts.common.preference.ContactsPreferences;
 import com.android.dialer.calllogutils.PhoneNumberDisplayUtil;
+import com.android.dialer.contacts.displaypreference.ContactDisplayPreferences.DisplayOrder;
 import com.android.dialer.logging.ContactSource;
 import com.android.dialer.phonenumbercache.ContactInfo;
 import com.android.dialer.phonenumberutil.PhoneNumberHelper;
@@ -98,9 +98,8 @@ public class CallStatsDetails implements Parcelable {
   }
 
 
-  public void updateDisplayProperties(Context context, int nameDisplayOrder) {
-    if (nameDisplayOrder == ContactsPreferences.DISPLAY_ORDER_PRIMARY
-        || TextUtils.isEmpty(nameAlternative)) {
+  public void updateDisplayProperties(Context context, DisplayOrder nameDisplayOrder) {
+    if (nameDisplayOrder == DisplayOrder.PRIMARY || TextUtils.isEmpty(nameAlternative)) {
       this.displayName = this.name;
     } else {
       this.displayName = this.nameAlternative;

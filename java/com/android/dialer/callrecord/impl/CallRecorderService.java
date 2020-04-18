@@ -25,7 +25,6 @@ import android.media.MediaRecorder;
 import android.media.MediaScannerConnection;
 import android.os.IBinder;
 import android.os.RemoteException;
-import android.os.SystemProperties;
 import android.text.TextUtils;
 import android.provider.Settings;
 import android.util.Log;
@@ -52,8 +51,6 @@ public class CallRecorderService extends Service {
   private MediaRecorder mMediaRecorder = null;
   private RecorderState mState = RecorderState.IDLE;
   private CallRecording mCurrentRecording = null;
-
-  private static final String AUDIO_SOURCE_PROPERTY = "persist.call_recording.src";
 
   private SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyMMdd_HHmmssSSS");
 
@@ -97,8 +94,7 @@ public class CallRecorderService extends Service {
   }
 
   private int getAudioSource() {
-    int defaultValue = getResources().getInteger(R.integer.call_recording_audio_source);
-    return SystemProperties.getInt(AUDIO_SOURCE_PROPERTY, defaultValue);
+    return getResources().getInteger(R.integer.call_recording_audio_source);
   }
 
   private int getAudioFormatChoice() {

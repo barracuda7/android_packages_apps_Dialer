@@ -16,40 +16,41 @@
 
 package com.android.dialer.lookup;
 
-import com.android.dialer.phonenumbercache.ContactInfo;
-import com.android.dialer.lookup.auskunft.AuskunftPeopleLookup;
-
 import android.content.Context;
 import android.util.Log;
 
+import com.android.dialer.phonenumbercache.ContactInfo;
+import com.android.dialer.lookup.auskunft.AuskunftPeopleLookup;
+
+import java.util.List;
+
 public abstract class PeopleLookup {
-    private static final String TAG = PeopleLookup.class.getSimpleName();
+  private static final String TAG = PeopleLookup.class.getSimpleName();
 
-    private static PeopleLookup INSTANCE = null;
+  private static PeopleLookup INSTANCE = null;
 
-    public static PeopleLookup getInstance(Context context) {
-        String provider = LookupSettings.getPeopleLookupProvider(context);
+  public static PeopleLookup getInstance(Context context) {
+    String provider = LookupSettings.getPeopleLookupProvider(context);
 
-        if (INSTANCE == null || !isInstance(provider)) {
-            Log.d(TAG, "Chosen people lookup provider: " + provider);
+    if (INSTANCE == null || !isInstance(provider)) {
+      Log.d(TAG, "Chosen people lookup provider: " + provider);
 
-            if (provider.equals(LookupSettings.PLP_AUSKUNFT)) {
-                INSTANCE = new AuskunftPeopleLookup(context);
-            }
-        }
-
-        return INSTANCE;
+      if (provider.equals(LookupSettings.PLP_AUSKUNFT)) {
+        INSTANCE = new AuskunftPeopleLookup(context);
+      }
     }
 
-    private static boolean isInstance(String provider) {
-        if (provider.equals(LookupSettings.PLP_AUSKUNFT)
-                && INSTANCE instanceof AuskunftPeopleLookup) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    return INSTANCE;
+  }
 
-    public abstract ContactInfo[] lookup(Context context,
-            String filter);
+  private static boolean isInstance(String provider) {
+    if (provider.equals(LookupSettings.PLP_AUSKUNFT)
+        && INSTANCE instanceof AuskunftPeopleLookup) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public abstract List<ContactInfo> lookup(Context context, String filter);
 }

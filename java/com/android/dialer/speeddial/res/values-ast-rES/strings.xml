@@ -17,10 +17,8 @@
   -->
 <resources>
   <string name="favorites_header">Favoritos</string>
-  <string name="suggestions_header">Suxerencies</string>
   <string name="speed_dial_add_button_text">Amestar</string>
   <string name="speed_dial_remember_this_choice">Recordar esta opción</string>
-  <string name="speed_dial_disambig_dialog_title">Escueyi un Mou favoritu</string>
   <string name="disambig_option_video_call">Videollamada</string>
   <string name="disambig_option_voice_call">Llamada</string>
   <string name="add_favorite_activity_title">Amestar Favoritu</string>

@@ -23,6 +23,7 @@ import android.preference.PreferenceManager;
 
 import com.android.incallui.call.CallList;
 import com.android.incallui.call.DialerCall;
+import com.android.incallui.call.state.DialerCallState;
 import com.android.incallui.InCallPresenter.InCallState;
 
 public class InCallDndHandler implements InCallPresenter.InCallStateListener {
@@ -61,7 +62,7 @@ public class InCallDndHandler implements InCallPresenter.InCallStateListener {
     if (!prefs.getBoolean(KEY_ENABLE_DND, false)) {
       return;
     }
-    if (DialerCall.State.isConnectingOrConnected(call.getState())) {
+    if (DialerCallState.isConnectingOrConnected(call.getState())) {
       Log.d(this, "Enabling Do Not Disturb mode");
       setDoNotDisturbMode(NotificationManager.INTERRUPTION_FILTER_NONE);
     } else {
